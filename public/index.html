@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Simples</title>
+    <style>
+        #messages {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        #messages li {
+            padding: 5px 10px;
+        }
+
+        #messages li:nth-child(odd) {
+            background: #eee;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="messages"></ul>
+    <p id="count"></p>
+    <form action="">
+        <input id="m" autocomplete="off" /><button>Enviar</button>
+    </form>
+    <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"
+        integrity="sha384-Gr6Lu2Ajx28mzwyVR8CFkULdCU7kMlZ9UthllibdOSo6qAiN+yXNHqtgdTvFXMT4"
+        crossorigin="anonymous"></script>
+    <script>
+        const socket = io("ws://localhost:5000");
+        socket.on('connect', () => {
+            const userId = socket.id;
+            console.log(userId)
+        })
+
+        let messages = document.getElementById('messages');
+        let form = document.querySelector('form');
+        let input = document.getElementById('m');
+        let countPerson = document.getElementById('count');
+
+        socket.on('count', (count) => {
+            countPerson.textContent = count + ' pessoas ativas.'
+        })
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (input.value) {
+                socket.emit('message', input.value);
+                input.value = '';
+            }
+        });
+
+        socket.on('message', (msg) => {
+            let item = document.createElement('li');
+            item.textContent = msg;
+            messages.appendChild(item);
+            window.scrollTo(0, document.body.scrollHeight);
+        });
+    </script>
+</body>
+
+</html>

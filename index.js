@@ -17,7 +17,7 @@ io.on('connection', (socket) => {
     io.engine.generateId(req => uuid.v4());
 
     socket.on('message', (message) => {
-        io.send(message);
+        io.send({ message, id: socket.id });
     })
 
     socket.on('disconnect', () => {

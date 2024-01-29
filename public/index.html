@@ -16,8 +16,8 @@
             padding: 5px 10px;
         }
 
-        #messages li:nth-child(odd) {
-            background: #eee;
+        #messages li.my-message {
+            background: #d8fffa;
         }
     </style>
 </head>
@@ -33,8 +33,10 @@
         crossorigin="anonymous"></script>
     <script>
         const socket = io("ws://localhost:5000");
+        let userId;
+
         socket.on('connect', () => {
-            const userId = socket.id;
+            userId = socket.id;
             console.log(userId)
         })
 
@@ -55,9 +57,13 @@
             }
         });
 
-        socket.on('message', (msg) => {
+        socket.on('message', (data) => {
             let item = document.createElement('li');
-            item.textContent = msg;
+            
+            if (data.id == userId)
+                item.classList.add('my-message');
+
+            item.textContent = data.message;
             messages.appendChild(item);
             window.scrollTo(0, document.body.scrollHeight);
         });

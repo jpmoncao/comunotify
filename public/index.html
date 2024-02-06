@@ -1,73 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat Simples</title>
-    <style>
-        #messages {
-            list-style-type: none;
-            margin: 0;
-            padding: 0;
-        }
-
-        #messages li {
-            padding: 5px 10px;
-        }
-
-        #messages li.my-message {
-            background: #d8fffa;
-        }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>Comunotify</title>
+    <!-- <link rel="stylesheet" href="css/index.css"> -->
+    <script src="js/index.js" defer></script>
 </head>
 
 <body>
-    <ul id="messages"></ul>
-    <p id="count"></p>
-    <form action="">
-        <input id="m" autocomplete="off" /><button>Enviar</button>
-    </form>
+    <header class="d-flex w-100 px-4 py-2 bg-success bg-gradient text-white justify-content-between align-items-center">
+        <h1 class="h3 text-white">Meu chat</h1>
+    </header>
+    <main class="mt-4">
+        <form action="" onsubmit="handleSubmit(event)" method="post"
+            class="d-flex justify-content-center align-items-center flex-column w-50 mx-auto gap-3">
+            <label for="name">Nome</label>
+            <input type="text" name="name" id="name" class="form-control" placeholder="Seu Nome" required>
+
+            <label for="group" class="form-label">Grupo</label>
+            <select name="group" id="group" class="form-select" required>
+                <option value="">Selecione...</option>
+                <option value="1">Telão</option>
+                <option value="2">Salinha</option>
+                <option value="3">Estacionamento</option>
+            </select>
+
+            <button type="submit" class="btn btn-success">Entrar</button>
+        </form>
+    </main>
     <script src="https://cdn.socket.io/4.7.4/socket.io.min.js"
         integrity="sha384-Gr6Lu2Ajx28mzwyVR8CFkULdCU7kMlZ9UthllibdOSo6qAiN+yXNHqtgdTvFXMT4"
         crossorigin="anonymous"></script>
-    <script>
-        const socket = io("ws://localhost:5000");
-        let userId;
-
-        socket.on('connect', () => {
-            userId = socket.id;
-            console.log(userId)
-        })
-
-        let messages = document.getElementById('messages');
-        let form = document.querySelector('form');
-        let input = document.getElementById('m');
-        let countPerson = document.getElementById('count');
-
-        socket.on('count', (count) => {
-            countPerson.textContent = count + ' pessoas ativas.'
-        })
-
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-            if (input.value) {
-                socket.emit('message', input.value);
-                input.value = '';
-            }
-        });
-
-        socket.on('message', (data) => {
-            let item = document.createElement('li');
-            
-            if (data.id == userId)
-                item.classList.add('my-message');
-
-            item.textContent = data.message;
-            messages.appendChild(item);
-            window.scrollTo(0, document.body.scrollHeight);
-        });
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

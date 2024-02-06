@@ -1,0 +1,43 @@
+form {
+    min-height: 12vh;
+}
+
+#messages {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+
+    min-height: 80vh;
+    max-height: 80vh;
+    overflow-y: scroll;
+    list-style-type: none;
+    margin: 0;
+    padding: 6px 0px 12px;
+}
+
+#messages li {
+    max-width: 50vw;
+    min-width: 20vw;
+    height: auto;
+    box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.4);
+
+    padding: 6px 8px 6px 6px;
+    background-color: #daffda;
+    align-self: flex-start;
+    text-align: left;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+#messages li.my-message {
+    padding: 6px 6px 6px 8px;
+    background-color: #4beb48;
+    align-self: flex-end;
+    text-align: right;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}

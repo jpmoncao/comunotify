@@ -14,6 +14,19 @@ const handleSubmit = (e) => {
         mode: 'cors',
         headers: { 'Content-Type': 'application/json' }
     })
-        .then(res => console.log(res))
-        .catch(err => console.error(err));
+        .then(res => {
+            if (res.ok)
+                return res.json();
+        })
+        .then(data => {
+            localStorage.setItem('user', data.data);
+
+            document.querySelector('#alerta').innerHTML = data.message;
+            document.querySelector('#alerta').classList.remove('d-none');
+
+            setTimeout(2000, () => {
+                location.href = '/chat'
+            })
+        })
+        .catch(err => console.error('Erro: ' + err));
 }

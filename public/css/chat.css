@@ -1,5 +1,10 @@
 form {
-    min-height: 12vh;
+    min-height: 22vh;
+    width: 100vw;
+}
+
+header {
+    height: 8vh;
 }
 
 #messages {
@@ -7,8 +12,8 @@ form {
     flex-direction: column;
     gap: 0.2rem;
 
-    min-height: 80vh;
-    max-height: 80vh;
+    height: 70vh;
+    height: 70vh;
     overflow-y: scroll;
     list-style-type: none;
     margin: 0;
@@ -47,4 +52,22 @@ form {
     top: 5rem;
     left: 50%;
     transform: translate(-50%);
+}
+
+input {
+    display: block;
+    padding: .375rem 0rem;
+    margin: 0.5rem 0.025rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--bs-body-color);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }

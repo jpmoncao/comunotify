@@ -1,0 +1,32 @@
+#header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 100vw;
+    padding: .5rem 1.5rem;
+    background-image: var(--fade);
+    border-bottom: 1px solid var(--black);
+}
+
+#header h1 {
+    color: var(--white) !important;
+    font-size: 1.5em;
+}
+
+a:not([href]):not([class]),
+a:not([href]):not([class]):hover {
+    color: initial;
+    text-decoration: none;
+}
+
+a {
+    cursor: pointer;
+    color: var(--white);
+    transition: all .5s ease;
+}
+
+a:hover {
+    opacity: 0.9;
+}

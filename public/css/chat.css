@@ -41,3 +41,10 @@ form {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
+
+#alerta {
+    position: absolute;
+    top: 5rem;
+    left: 50%;
+    transform: translate(-50%);
+}

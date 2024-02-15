@@ -3,18 +3,23 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import { uuid } from 'uuidv4';
 import cors from 'cors';
+import { fileURLToPath } from 'url';
+import path, { dirname } from 'path';
 
 const app = express();
 const server = createServer(app);
 const io = new Server(server);
 
-app.use(express.static('public'));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 app.use(cors());
 
 // Views
 app.get('/', (req, res) => res.sendFile('index.html'));
-app.get('/chat', (req, res) => res.sendFile('../chat.html'));
+app.get('/chat', (req, res) => res.sendFile(path.join(__dirname, 'public', 'chat.html')));
 
 // Endpoints
 app.post('/login', (req, res) => {
@@ -50,10 +55,18 @@ app.post('/login', (req, res) => {
 
 io.on('connection', (socket) => {
     io.emit('count', io.engine.clientsCount);
-    io.engine.generateId(req => uuid.v4());
+
+    socket.on('enter', (user) => {
+        io.emit('hasEnter', { user, id: io.userId });
+    })
+
+    socket.on('register', (userId) => {
+        socket.userId = userId;
+    })
 
     socket.on('message', (message) => {
-        io.send({ message, id: socket.id });
+        console.log(socket.userId);
+        io.send({ message, id: socket.userId });
     })
 
     socket.on('disconnect', () => {

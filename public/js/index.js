@@ -1,3 +1,6 @@
+if (localStorage.getItem('user'))
+    location.href = '/chat';
+
 const form = document.getElementsByTagName("form")[0];
 
 const handleSubmit = (e) => {
@@ -19,14 +22,14 @@ const handleSubmit = (e) => {
                 return res.json();
         })
         .then(data => {
-            localStorage.setItem('user', data.data);
+            localStorage.setItem('user', JSON.stringify(data.data));
 
             document.querySelector('#alerta').innerHTML = data.message;
             document.querySelector('#alerta').classList.remove('d-none');
 
-            setTimeout(2000, () => {
+            setTimeout(() => {
                 location.href = '/chat'
-            })
+            }, 2000)
         })
         .catch(err => console.error('Erro: ' + err));
 }

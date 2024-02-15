@@ -64,9 +64,33 @@ io.on('connection', (socket) => {
         socket.userId = userId;
     })
 
-    socket.on('message', (message) => {
-        console.log(socket.userId);
-        io.send({ message, id: socket.userId });
+    socket.on('message', ({ name, info, group }) => {
+        let message;
+
+        let {
+            mensagem,
+            numeropulseira,
+            corpulseira,
+            turmapulseira,
+            placaveiculo,
+            corveiculo,
+            modeloveiculo,
+            marcaveiculo,
+        } = info;
+
+        switch (group) {
+            case 'telao':
+                message = mensagem;
+                break;
+            case 'salinha':
+                message = `Pulseira ${corpulseira} Nº ${numeropulseira} - Turma: ${turmapulseira ?? '-'}`;
+                break;
+            case 'estacionamento':
+                message = `Veículo ${marcaveiculo} ${modeloveiculo} da cor ${corveiculo} - Placa: ${placaveiculo}`;
+                break;
+        }
+
+        io.send({ title: `${name} (${group})`, message, id: socket.userId });
     })
 
     socket.on('disconnect', () => {
